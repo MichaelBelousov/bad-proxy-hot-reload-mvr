@@ -1,19 +1,38 @@
 import React from "react";
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
 
+// this is fine because the proxy is dynamically created, not exported
 function createUnusableObject(usageError) {
-   return new Proxy({}, {
-     get(_target, key) {
+  return new Proxy(
+    {},
+    {
+      get(_target, key) {
+        console.log(_target, key);
+        // work around
+        // if (key === "$$typeof") return undefined;
+        throw Error("cannot use object: " + usageError);
+      },
+    }
+  );
+}
+
+// if you remove the "export" and refresh the page there won't be issues
+export const rawUnusableObject = new Proxy(
+  {},
+  {
+    get(_target, key) {
       console.log(_target, key);
       // work around
       // if (key === "$$typeof") return undefined;
-      throw Error("cannot use object: " + usageError);
-    }
-   });
-}
+      throw Error("cannot use object");
+    },
+  }
+);
 
-const myContextDefaultState = createUnusableObject("you must have a provider to use MyContext");
+const myContextDefaultState = createUnusableObject(
+  "you must have a provider to use MyContext"
+);
 
 export const MyContext = React.createContext(myContextDefaultState);
 
