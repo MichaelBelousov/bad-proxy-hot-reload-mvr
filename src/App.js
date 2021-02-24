@@ -17,7 +17,8 @@ function createUnusableObject(usageError) {
   );
 }
 
-// if you remove the "export" and refresh the page there won't be issues
+// THIS IS THE ISSUE
+// if you remove the "export" keyword and launch the app it will throw
 export const rawUnusableObject = new Proxy(
   {},
   {
