@@ -2,11 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import { MyContext, MyContextConsumer } from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <MyContext.Provider value={{data: 11}}>
+      <MyContextConsumer />
+      <App />
+    </MyContext.Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
